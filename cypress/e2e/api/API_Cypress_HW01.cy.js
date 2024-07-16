@@ -26,6 +26,7 @@ describe("API-Cypress Practice01", () => {
     });
   
     it("TASK-2: Create a new student and validate the response", () => {
+
         // Create new student
       const newStudent = {
         DOB: "2000-01-01",
@@ -49,7 +50,6 @@ describe("API-Cypress Practice01", () => {
         const student = response.body;
         newStudentId = student.STUDENT_ID; 
 
-
         expect(student.STUDENT_ID).to.be.greaterThan(2);
 
         // 4.	Validate that the DOB matches the provided DOB.
@@ -57,7 +57,6 @@ describe("API-Cypress Practice01", () => {
 
         // 5.	Validate that the EMAIL matches the provided EMAIL.
         expect(student.EMAIL).to.eq(newStudent.EMAIL);
-
 
         // 6.	Validate that the FIRST_NAME matches the provided FIRST_NAME.
         expect(student.FIRST_NAME).to.eq(newStudent.FIRST_NAME);
@@ -113,8 +112,10 @@ describe("API-Cypress Practice01", () => {
         url: `${baseUrl}/${newStudentId}`,
         body: { INSTRUCTOR_ID: updatedInstructorId },
       }).then((response) => {
+
         // 2.	Validate that the status code is 200.
         expect(response.status).to.eq(200);
+
         // 3.	Validate that the response message is 'Successfully updated {FIRST_NAME}'.
         expect(response.body.message).to.eq("Student's instructor id updated to '4'");
 
@@ -122,14 +123,17 @@ describe("API-Cypress Practice01", () => {
     });
   
     it("TASK-5: Delete the newly created student and validate the response", () => {
+
         // 1.	Send a DELETE request to the endpoint to delete the student using STUDENT_ID.
       cy.request({
         method: "DELETE",
         url: `${baseUrl}/${newStudentId}`,
       }).then((response) => {
+
         // 2.	Validate that the status code is 204.
         expect(response.status).to.eq(200);
 
+        // 3.	Validate that the response message is 'Successfully deleted user with Id: {STUDENT_ID}'.
         expect(response.body.message).to.eq("Successfully deleted user with ID: {STUDENT_ID}");
 
 
